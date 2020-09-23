@@ -1,0 +1,20 @@
+---
+- hosts: OEL7 
+  tasks:
+    - name: remove csia_linux package from the server
+      yum:
+        name: csia_linux
+        state: removed
+
+    - name: copying csia_linux rpm file from DCPOPSAUTOVM01 to target machines
+      copy:
+        src: csia_linux-7.6.1.11-1.el7.noarch.rpm
+        dest: /tmp/csia_linux-7.6.1.11-1.el7.noarch.rpm
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: install csia_linux package on the servers
+      yum: 
+        name: /tmp/csia_linux-7.6.1.11-1.el7.noarch.rpm
+        state: present
